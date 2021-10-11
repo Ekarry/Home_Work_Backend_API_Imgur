@@ -1,11 +1,19 @@
 package Testing;
 
+import io.restassured.response.Response;
+import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.proxy;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 public class AccountTests {
+    private Object username;
+
     @Test
     void getAccountInfoTest() {
         given()
-                .header("Authorization", token)
+                .header("Authorization", proxy)
                 .when()
                 .get("https://api.imgur.com/3/account/{username}", username)
                 .then()
@@ -20,7 +28,7 @@ public class AccountTests {
                 .log()
                 .uri()
                 .when()
-                .get("https://api.imgur.com/3/account/{username}", username)
+                .get("https://api.imgur.com/3/account/{username}")
                 .prettyPeek()
                 .then()
                 .statusCode(200);
@@ -28,7 +36,7 @@ public class AccountTests {
     @Test
     void getAccountInfoWithAssertionsInGivenTest() {
         given()
-                .header("Authorization","Bearer ed7328187fb5c0a24092507ce0415ab1a5f8f55c" )
+                .header("Authorization", "Bearer ed7328187fb5c0a24092507ce0415ab1a5f8f55c")
                 .log()
                 .method()
                 .log()
@@ -37,11 +45,11 @@ public class AccountTests {
                 .statusCode(200)
                 .body("data.url", equalTo(username))
                 .body("success", equalTo(true))
-                .body("status",equalTo(200))
+                .body("status", equalTo(200))
                 .contentType("application/json")
                 .when()
                 .get("https://api.imgur.com/3/account/{username}", username)
-                .prettyPeek();
+                .prettyPeek()
     }
     @Test
     void getAccountInfoWithAssertionsAfterTest() {
@@ -52,7 +60,7 @@ public class AccountTests {
                 .log()
                 .uri()
                 .when()
-                .get("https://api.imgur.com/3/account/{username}", username)
+                .get("https://api.imgur.com/3/account/{username}", proxy.getUsername())
                 .prettyPeek();
         assertThat(response.jsonPath().get("data.url"), equalTo(username));
     }

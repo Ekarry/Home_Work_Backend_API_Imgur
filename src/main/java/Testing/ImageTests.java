@@ -11,16 +11,16 @@ import java.util.Base64;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.core.IsEqual.equalTo;
 
-public class ImageTests extends tests.BaseTest {
+public class ImageTests extends BaseTest {
     static String encodedFile;
     String uploadedImageId;
 
     @BeforeEach
     void beforeTest() {
-        byte[] byteArray = getFileContent("src/test/resources/s-l300.jpg");
+        byte[] byteArray = getFileContent("src/test/resources/photoFACE.jpg");
         encodedFile = Base64.getEncoder().encodeToString(byteArray);
     }
 
@@ -57,7 +57,7 @@ public class ImageTests extends tests.BaseTest {
     void uploadFileImageTest() {
         uploadedImageId = given()
                 .headers("Authorization", token)
-                .multiPart("image", new File("src/test/resources/s-l300.jpg"))
+                .multiPart("image", new File("src/test/resources/photoFACE.jpg"))
                 .expect()
                 .statusCode(200)
                 .when()
@@ -72,7 +72,7 @@ public class ImageTests extends tests.BaseTest {
     @Test
     void uploadJPEGFormatTest() {
         String encodedFile;
-        byte[] byteArray = getFileContent("src/test/resources/jake.jpeg");
+        byte[] byteArray = getFileContent("src/test/resources/photoAgr.jpg");
         encodedFile = Base64.getEncoder().encodeToString(byteArray);
         uploadedImageId = given()
                 .headers("Authorization", token)
@@ -94,7 +94,7 @@ public class ImageTests extends tests.BaseTest {
     @Test
     void uploadGIFFormatTest() {
         String encodedFile;
-        byte[] byteArray = getFileContent("src/test/resources/adventure-time-jake.gif");
+        byte[] byteArray = getFileContent("src/test/resources/Face.gif");
         encodedFile = Base64.getEncoder().encodeToString(byteArray);
         uploadedImageId = given()
                 .headers("Authorization", token)
@@ -116,7 +116,7 @@ public class ImageTests extends tests.BaseTest {
     @Test
     void uploadPNGFormatTest() {
         String encodedFile;
-        byte[] byteArray = getFileContent("src/test/resources/jake.png");
+        byte[] byteArray = getFileContent("src/test/resources/face-head.png");
         encodedFile = Base64.getEncoder().encodeToString(byteArray);
         uploadedImageId = given()
                 .headers("Authorization", token)
@@ -138,7 +138,7 @@ public class ImageTests extends tests.BaseTest {
     @Test
     void uploadFile1x1pixelTest() {
         String encodedFile;
-        byte[] byteArray = getFileContent("src/test/resources/1x1-0000ff7f.png");
+        byte[] byteArray = getFileContent("src/test/resources/nothing.png");
         encodedFile = Base64.getEncoder().encodeToString(byteArray);
         uploadedImageId = given()
                 .headers("Authorization", token)
@@ -160,7 +160,7 @@ public class ImageTests extends tests.BaseTest {
     @Test
     void uploadBMPFormatTest() {
         String encodedFile;
-        byte[] byteArray = getFileContent("src/test/resources/jake.bmp");
+        byte[] byteArray = getFileContent("src/test/resources/bmp.bmp");
         encodedFile = Base64.getEncoder().encodeToString(byteArray);
         uploadedImageId = given()
                 .headers("Authorization", token)
@@ -181,7 +181,7 @@ public class ImageTests extends tests.BaseTest {
     @Test
     void uploadAndFavoriteFileTest() {
         String encodedFile;
-        byte[] byteArray = getFileContent("src/test/resources/jake.jpeg");
+        byte[] byteArray = getFileContent("src/test/resources/photoAgr.jpg");
         encodedFile = Base64.getEncoder().encodeToString(byteArray);
         String imageHash = given()
                 .headers("Authorization", token)
@@ -225,5 +225,5 @@ public class ImageTests extends tests.BaseTest {
         }
         return byteArray;
     }
-    }
+}
 

@@ -1,6 +1,6 @@
 package Testing;
 
-import io.qameta.allure.restassured.*;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 
